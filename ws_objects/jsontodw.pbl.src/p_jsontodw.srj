@@ -1,0 +1,20 @@
+﻿$PBExportHeader$p_jsontodw.srj
+EXE:jsondw.exe,,0,1,1,0,C:\Program Files (x86)\Appeon\Common\PowerBuilder\Runtime 22.2.0.3397
+CMP:0,0,0,3,0,0,1
+COM:RSRSYSTEM
+DES:RSRSYSTEM
+CPY:Ramón San Félix Ramón
+PRD:JsonToDW
+PVS:2022.3.3397.2
+PVN:2022,3,3397,2
+FVS:2022.3.3397.2
+FVN:2022,3,3397,2
+MAN:0,asInvoker,0
+PBD:jsontodw.pbl,,1
+OBJ:C:\proyecto pw2022\Blog\PowerBuilder\jsontodw\jsontodw.pbl,gf_replaceall,f
+OBJ:C:\proyecto pw2022\Blog\PowerBuilder\jsontodw\jsontodw.pbl,u_datastore,u
+OBJ:C:\proyecto pw2022\Blog\PowerBuilder\jsontodw\jsontodw.pbl,jsontodw,a
+OBJ:C:\proyecto pw2022\Blog\PowerBuilder\jsontodw\jsontodw.pbl,u_datawindow,u
+OBJ:C:\proyecto pw2022\Blog\PowerBuilder\jsontodw\jsontodw.pbl,w_main,w
+OBJ:C:\proyecto pw2022\Blog\PowerBuilder\jsontodw\jsontodw.pbl,gf_iin,f
+OBJ:C:\proyecto pw2022\Blog\PowerBuilder\jsontodw\jsontodw.pbl,gf_mensaje,f

@@ -10,6 +10,10 @@ global error error
 global message message
 end forward
 
+global variables
+
+end variables
+
 global type jsontodw from application
 string appname = "jsontodw"
 string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 22.0\IDE\theme"
@@ -22,7 +26,7 @@ long richtexteditx64type = 5
 long richtexteditversion = 3
 string richtexteditkey = ""
 string appicon = ""
-string appruntimeversion = "22.2.0.3356"
+string appruntimeversion = "22.2.0.3397"
 boolean manualsession = false
 boolean unsupportedapierror = false
 boolean ultrafast = false
