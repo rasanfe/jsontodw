@@ -1,0 +1,20 @@
+﻿EXE:jsondw.exe,,0,1,1,0,C:\Program Files (x86)\Appeon\Common\PowerBuilder\Runtime 25.0.0.3683
+CMP:0,0,0,3,0,0,1
+COM:RSRSYSTEM
+DES:RSRSYSTEM
+CPY:Ramón San Félix Ramón
+PRD:JsonToDW
+PVS:2025.1.3683.3
+PVN:2025,1,3683,3
+FVS:2025.1.3683.3
+FVN:2025,1,3683,3
+MAN:0,asInvoker,0
+PBD:jsontodw.pbl,,1
+OBJ:C:\proyecto pw2025\Blog\PowerBuilder\jsontodw\jsontodw.pbl,gf_mensaje,f
+OBJ:C:\proyecto pw2025\Blog\PowerBuilder\jsontodw\jsontodw.pbl,jsontodw,a
+OBJ:C:\proyecto pw2025\Blog\PowerBuilder\jsontodw\jsontodw.pbl,w_main,w
+OBJ:C:\proyecto pw2025\Blog\PowerBuilder\jsontodw\jsontodw.pbl,gf_endpoint,f
+OBJ:C:\proyecto pw2025\Blog\PowerBuilder\jsontodw\jsontodw.pbl,gf_iin,f
+OBJ:C:\proyecto pw2025\Blog\PowerBuilder\jsontodw\jsontodw.pbl,u_datawindow,u
+OBJ:C:\proyecto pw2025\Blog\PowerBuilder\jsontodw\jsontodw.pbl,u_datastore,u
+OBJ:C:\proyecto pw2025\Blog\PowerBuilder\jsontodw\jsontodw.pbl,gf_replaceall,f
