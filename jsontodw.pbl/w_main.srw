@@ -1,8 +1,6 @@
 ﻿forward
 global type w_main from window
 end type
-type cb_3 from commandbutton within w_main
-end type
 type dw_1 from u_datawindow within w_main
 end type
 type cb_2 from commandbutton within w_main
@@ -32,7 +30,6 @@ boolean maxbox = true
 boolean resizable = true
 string icon = "AppIcon!"
 boolean center = true
-cb_3 cb_3
 dw_1 dw_1
 cb_2 cb_2
 cb_1 cb_1
@@ -209,7 +206,6 @@ Return ls_json
 end function
 
 on w_main.create
-this.cb_3=create cb_3
 this.dw_1=create dw_1
 this.cb_2=create cb_2
 this.cb_1=create cb_1
@@ -218,8 +214,7 @@ this.st_info=create st_info
 this.st_myversion=create st_myversion
 this.st_platform=create st_platform
 this.r_2=create r_2
-this.Control[]={this.cb_3,&
-this.dw_1,&
+this.Control[]={this.dw_1,&
 this.cb_2,&
 this.cb_1,&
 this.p_2,&
@@ -230,7 +225,6 @@ this.r_2}
 end on
 
 on w_main.destroy
-destroy(this.cb_3)
 destroy(this.dw_1)
 destroy(this.cb_2)
 destroy(this.cb_1)
@@ -260,39 +254,6 @@ dw_1.height = Newheight -550
 dw_1.width = newwidth -100
 cb_1.y = dw_1.height + dw_1.y + 25
 cb_2.y = cb_1.y 
-cb_3.y = cb_1.y 
-end event
-
-type cb_3 from commandbutton within w_main
-integer x = 1641
-integer y = 2556
-integer width = 791
-integer height = 128
-integer taborder = 70
-integer textsize = -12
-integer weight = 400
-fontcharset fontcharset = ansi!
-fontpitch fontpitch = variable!
-fontfamily fontfamily = swiss!
-string facename = "Arial"
-string text = "Retrieve Api example"
-end type
-
-event clicked;Long ll_RowCount
-String ls_json
-Constant String ls_endpoint ="facturasAContabilizarDoc" //"facturasAContabilizar"
-Any la_params[]  //Este endpoint no tiene parametros
-
-ls_json = gf_endpoint(ls_endpoint, la_params[])
-
-IF ls_json = "" Then Return
-
-ll_RowCount = dw_1.of_cargar_json(ls_json)
-
-If ll_RowCount < 0 Then Return
-
-
-
 
 end event
 
