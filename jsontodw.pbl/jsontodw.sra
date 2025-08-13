@@ -15,7 +15,8 @@ end variables
 
 global type jsontodw from application
 string appname = "jsontodw"
-string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 22.0\IDE\theme"
+integer highdpimode = 0
+string themepath = "C:\Program Files (x86)\Appeon\PowerBuilder 25.0\IDE\theme"
 string themename = "Do Not Use Themes"
 boolean nativepdfvalid = false
 boolean nativepdfincludecustomfont = false
@@ -25,7 +26,7 @@ long richtexteditx64type = 5
 long richtexteditversion = 3
 string richtexteditkey = ""
 string appicon = ""
-string appruntimeversion = "25.0.0.3683"
+string appruntimeversion = "25.0.0.3711"
 boolean manualsession = false
 boolean unsupportedapierror = false
 boolean ultrafast = false
@@ -35,7 +36,6 @@ long webview2distribution = 0
 boolean webview2checkx86 = false
 boolean webview2checkx64 = false
 string webview2url = "https://developer.microsoft.com/en-us/microsoft-edge/webview2/"
-integer highdpimode = 0
 end type
 global jsontodw jsontodw
 
