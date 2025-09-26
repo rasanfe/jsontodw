@@ -195,7 +195,7 @@ ls_dwSyntax  =gf_replaceall(ls_dwSyntax, "'", '"')
 RETURN ls_dwSyntax
 end function
 
-private function long of_get_json_schema (string as_json, ref string as_columns[], ref string as_types[], ref string as_lens[]);String ls_Json, ls_Type, ls_value, ls_key, ls_len
+private function long of_get_json_schema (string as_json, ref string as_columns[], ref string as_types[], ref string as_lens[]);String ls_Json, ls_Type, ls_value, ls_key, ls_len, ls_StringValue
 Long ll_ChildCount, ll_Index, ll_ArrayItem, ll_ObjectItem
 JsonParser lnv_JsonParser
 Long ll_columna
@@ -205,6 +205,7 @@ Time lt_parse
 Dec ld_parse
 Long ll_parse
 Long ll_Row, ll_RowCount
+String ls_Error
 
 //El Formato Esperado sera una Array de Josn, donde caja json sera cada fila
 
@@ -213,7 +214,13 @@ lnv_JsonParser = Create JsonParser
 ls_json = as_json
 
 // Loads a JSON string
-lnv_JsonParser.LoadString(ls_Json)
+ls_error = lnv_JsonParser.LoadString(ls_Json)
+
+If Len(ls_Error) > 0 Then
+	MessageBox("Error", ls_Error, Exclamation!)
+	Return - 1
+End If
+
 ll_ArrayItem = lnv_JsonParser.GetRootItem() // Root item is JsonArrayItem!
 ll_ChildCount = lnv_JsonParser.GetChildCount(ll_ArrayItem)
 
@@ -246,20 +253,25 @@ For ll_Index = 1 To ll_ChildCount
 	 ll_columna ++
 	 as_columns[ll_columna] = ls_key
 	 
-		 
+
 	  Choose Case lnv_JsonParser.GetItemType(ll_ObjectItem, ls_key)
 		  Case JsonStringItem!
 			
-			//Probamos si es Datetime
-			ldt_parse =  lnv_JsonParser.GetItemDatetime(ll_ObjectItem, ls_key)
+			ls_StringValue =  lnv_JsonParser.GetItemString(ll_ObjectItem, ls_key)
 			
-			If Not Isnull(ldt_parse) Then
-				ls_Type = "datetime"
-				ls_len=""			
-			End if	
+			//Para Datetime Tiene que tener / o - y : para la hora
+			If (pos(ls_StringValue, "-") > 0 Or  pos(ls_StringValue, "/")>0) And pos(ls_StringValue, ":") > 0 Then
+				//Probamos si es Datetime
+				ldt_parse =  lnv_JsonParser.GetItemDatetime(ll_ObjectItem, ls_key)
+				
+				If Not Isnull(ldt_parse) Then
+					ls_Type = "datetime"
+					ls_len=""			
+				End if	
+			End If
 			
-			//Probamos si es Date
-			If ls_Type = "" Then
+			//Para Date Tiene que tener / o - 
+			If ls_Type = ""  and (pos(ls_StringValue, "-") > 0 Or  pos(ls_StringValue, "/")>0) Then 
 				lda_parse =  lnv_JsonParser.GetItemDate(ll_ObjectItem, ls_key)
 				
 				If Not Isnull(lda_parse) and string(lda_parse, "yyyy-mm-dd") <> "1900-01-01"Then
@@ -268,8 +280,8 @@ For ll_Index = 1 To ll_ChildCount
 				End if	
 			End if
 			
-			//Probamos si es Time
-			If ls_Type = "" Then
+			//Para Time Tiene que tener : para la hora
+			If ls_Type = "" and pos(ls_StringValue, ":") > 0 Then
 				lt_parse =  lnv_JsonParser.GetItemtime(ll_ObjectItem, ls_key)
 				
 				If Not Isnull(lt_parse) and string(lt_parse, "hh:mm:ss.ffffff") <> "00:00:00.000000" Then
@@ -286,14 +298,19 @@ For ll_Index = 1 To ll_ChildCount
 						
 
 		  Case JsonNumberItem!
-				
-			ld_parse = 	lnv_JsonParser.GetItemDecimal(ll_ObjectItem, ls_key)
+			  
+			 ls_StringValue =  String(lnv_JsonParser.GetItemNumber(ll_ObjectItem, ls_key))
+			
+			//Para Decimal tendra que tener punto o coma
+			If (pos(ls_StringValue, ".") > 0 Or  pos(ls_StringValue, ",")>0)	 Then
+				ld_parse = 	lnv_JsonParser.GetItemDecimal(ll_ObjectItem, ls_key)
 			 
-			If Not Isnull(ld_parse) Then
-				ls_value = string(ld_parse)
-				ls_Type = "decimal"
-				ls_len="4"	
-			 End if	
+				If Not Isnull(ld_parse) Then
+					ls_value = string(ld_parse)
+					ls_Type = "decimal"
+					ls_len="4"	
+				 End if	
+			 End IF
 			
 			If ls_Type = "" Then
 				  ll_parse = lnv_JsonParser.GetItemNumber(ll_ObjectItem, ls_key)
@@ -302,18 +319,18 @@ For ll_Index = 1 To ll_ChildCount
 				  ls_len=""	
 			End if
 		  Case JsonBooleanItem!
-				  ls_value = string(lnv_JsonParser.GetItemBoolean(ll_ObjectItem, ls_key))
-			  ls_Type ="number"
+				ls_value = string(lnv_JsonParser.GetItemBoolean(ll_ObjectItem, ls_key))
+			  	ls_Type ="number"
 				ls_len=""
 			  If lnv_JsonParser.GetItemBoolean(ll_ObjectItem, ls_key) = True Then
-				ls_value = "1"
+					ls_value = "1"
 			  Else
-				ls_value = "0"
+					ls_value = "0"
 			  End if	
 		  Case JsonNullItem!
 				ls_value = ""
-			ls_len="0"
-			ls_Type ="string"
+				ls_len="0"
+				ls_Type ="string"
 		Case JsonObjectItem!
 			// Type of the JSON node whose key value pair is an object, such as "date_object":{"datetime":7234930293, "date": "2017-09-21", "time": "12:00:00"}.
 			ls_value = lnv_JsonParser.GetItemObjectJSONString (ll_ObjectItem, ls_key)
@@ -470,7 +487,7 @@ For ll_Index = 1 To ll_ChildCount
 	Next	 
 Next
 
-Return ll_RowCount
+Return ll_InsertRow
 end function
 
 on u_datastore.create
