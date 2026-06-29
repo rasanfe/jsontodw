@@ -36,7 +36,6 @@ Los objetos clave que tenéis dentro:
 |-------------------|-------------------------------------------------------------|
 | `u_datastore.sru` | DataStore extendido que recibe el JSON y se autoconfigura.  |
 | `u_datawindow.sru`| Variante para DataWindow visual.                            |
-| `gf_endpoint.srf` | Ayuda para traer el JSON desde un endpoint.                 |
 | `w_main.srw`      | La ventana de demostración.                                  |
 
 Todo **sin tocar el objeto Transaction**: aquí no hay tabla ni base de datos detrás, solo el JSON y un
